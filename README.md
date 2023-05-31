@@ -9,3 +9,15 @@
 <h2>Corresponding Child Tables</h2>
 <p>Once you click a cell in 'Total Paid Amount', a new window opens to show the installments made in the Parent Transaction</p>
 <img src=https://github.com/0xDanki/daofab/assets/101350894/bf86dc11-af0e-4080-a4d7-9002012b71c5">
+
+<h2>Instructions</h2>
+<ol>
+  <li>run 'npm init -y' on root folder</li>
+  <li>install necessary dependencies:</br>
+      npm install express</br>
+      npm install cors</br>
+      npm install fs</br>
+  <li>inside the root folder, run 'node server.js'</li>
+  <li>open another window in the commandline and then go to client directory by entering 'cd client'</li>
+  <li>run 'npm install react-router-dom'</li>
+  <li>run 'npm start'</li>
