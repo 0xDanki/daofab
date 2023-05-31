@@ -26,9 +26,17 @@ app.get('/api/parents', (req, res) => {
     res.json(paginatedData);
   });  
 
-app.get('/api/child', (req, res) => {
+  app.get('/api/child', (req, res) => {
     const childData = JSON.parse(fs.readFileSync('child.json'));
-    res.json(childData.data);
+    const parentId = req.query.parentId;
+  
+    // Filter the child data by parent ID if parentId is provided
+    const filteredChildData = parentId ? childData.data.filter((child) => child.parentId === parentId) : childData.data;
+  
+    // Sort the child data by ID
+    const sortedChildData = filteredChildData.sort((a, b) => a.id - b.id);
+  
+    res.json(sortedChildData);
   });  
 
 app.listen(port, () => {

@@ -1,23 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import './App.css';
 
-function ChildTable() {
-    const { parentId } = useParams();
-  const [childData, setChildData] = useState([]);
+const ChildTable = ({ selectedParentChildData, parentId, parentData }) => {
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchChildData = async () => {
-        const response = await fetch(`http://localhost:3001/api/child/${parentId}`);
-        const data = await response.json();
-        setChildData(data);
-      };      
-  
-    fetchChildData();
-  }, [parentId]);
+  const handleBack = () => {
+    navigate('/');
+  };
+
+  const filteredChildData = selectedParentChildData.filter((child) => child.parentId === parentId);
+
+  // Find the corresponding parent for the current child
+  const parent = parentData.find((parent) => parent.id === parentId);
 
   return (
     <div>
-      <h2>Child Transactions (Parent ID: {parentId})</h2>
+      <h2>Child Transactions for Parent ID: {selectedParentChildData[0]?.parentId}</h2>
+      {/* {parent && (
+        <div>
+          <p>Sender: {parent.sender}</p>
+          <p>Receiver: {parent.receiver}</p>
+          <p>Total Amount: {parent.totalAmount}</p>
+        </div>
+      )} */}
       <table>
         <thead>
           <tr>
@@ -29,19 +35,20 @@ function ChildTable() {
           </tr>
         </thead>
         <tbody>
-          {childData.map((child) => (
+          {filteredChildData.map((child) => (
             <tr key={child.id}>
               <td>{child.id}</td>
-              <td>{child.sender}</td>
-              <td>{child.receiver}</td>
-              <td>{child.totalAmount}</td>
+              <td>{parent.sender}</td>
+              <td>{parent.receiver}</td>
+              <td>{parent.totalAmount}</td>
               <td>{child.paidAmount}</td>
             </tr>
           ))}
         </tbody>
       </table>
+      <button onClick={handleBack}>Back</button>
     </div>
   );
-}
+};
 
 export default ChildTable;
